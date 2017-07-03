@@ -47,7 +47,7 @@ public class SocketThread extends Thread {
 	}
 
 	private void selectMenu(int selectMenu, Composite root, SocketThread socketThread) throws UnsupportedOperationException, IOException {
-		// TODO Auto-generated method stub
+		
 		InputStream in = null;
 		socketThread.sendMessage("이동하고자 하는 디렉토리 또는 파일을 선택하세요");
 		in = socket.getInputStream();
@@ -63,7 +63,7 @@ public class SocketThread extends Thread {
 		explorer.selectMenu(selectMenu, root, socketThread);
 	}
 	
-	public void fileList(Composite root, SocketThread socketThread) throws NumberFormatException, UnsupportedOperationException, IOException{
+	public void fileList(Composite root, SocketThread socketThread) throws NumberFormatException, UnsupportedOperationException, IOException {
 		explorer.fileList(root, socketThread);
 	}
 
