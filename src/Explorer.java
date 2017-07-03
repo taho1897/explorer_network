@@ -1,18 +1,11 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.Socket;
 /*   탐색기 클래스   */
-public class Explorer {
-	private Socket socket;// private 소켓 선언
-	public Explorer(Socket socket) {// 소켓을 사용한 생성자
-		super();// 부모 객체 생성자 호출로 초기화
-		this.socket = socket;// 소켓 저장
-	}
-	/*   트리구조 생성 메소드, 동작 Exception   */
-	public Composite makeTree(Composite dirRoot) throws UnsupportedOperationException {
-		File file = new File(dirRoot.getTag());// 인자로 받은 복합요소 객체의 태그로 파일객체 생성
+// private 소켓 선언
+// 소켓을 사용한 생성자
+// 부모 객체 생성자 호출로 초기화
+// 소켓 저장
+
+/*   트리구조 생성 메소드, 동작 Exception   */
+// 인자로 받은 복합요소 객체의 태그로 파일객체 생성
 		File[] list;// 파일 리스트 객체 생성
 		list = file.listFiles();// 파일 리스트 객체에 파일객체 목록 저장 
 		if(list != null) {// 리스트가 비어있지 않은지 확인
