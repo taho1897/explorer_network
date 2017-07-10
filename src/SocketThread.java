@@ -30,6 +30,7 @@ public class SocketThread extends Thread {
 	}
 	
 	/*   스레드 실행 메소드   */
+	@SuppressWarnings("static-access")
 	public void run() {
 		try {// 외곽 try
 			explorer.makeFileList(root, this);// 복합요소 root 객체와 소켓을 사용하여 하위 요소 목록 생성
@@ -48,10 +49,10 @@ public class SocketThread extends Thread {
 	}
 
 	/*   선택한 메뉴값, 복합요소, 소켓스레드를 이용한 메뉴 선택 메소드, 동작, IO Exception 발생  */
-	public void selectMenu(int menuSelect, Component componet) throws UnsupportedOperationException, IOException {
+	public void selectMenu(int menuSelect, Component componet, SocketThread socketThread) throws UnsupportedOperationException, IOException {
 		InputStream in = null;// 인풋스트림 선언
-		// 소켓스레드로 디렉토리, 파일 선택 안내 메세지 출력
-		// 소켓으로 전달받은 인풋스트림 저장
+		socketThread.sendMessage("이동하고자 하는 디렉토리 또는 파일을 선택하세요");// 소켓스레드로 디렉토리, 파일 선택 안내 메세지 출력
+		in = socket.getInputStream();// 소켓으로 전달받은 인풋스트림 저장
 		String message;// 메세지 저장 변수 선언
 		int size;// 크기 선언
 		byte[] byteArray = new byte[10240];// 전송 위한 크기가 10240인 바이트배열 선언
@@ -62,11 +63,14 @@ public class SocketThread extends Thread {
 		message = new String(byteArray, 0, size, "UTF-8");// String 객체를 이용하여 메세지 저장(매개변수 4개짜리 String 확인 요)
 		message = message.trim();// 메세지 전후 공백 제거
 		menuSelect = Integer.parseInt(message);// 메세지를 int형으로 변환하여 메뉴 선택 변수에 저장
-		// 탐색기의 메뉴 선택 메소드 호출
+		explorer.selectMenu(menuSelect, componet, socketThread);// 탐색기의 메뉴 선택 메소드 호출
 	}
 	
 	/*   복합요소 객체, 소켓스레드를 받는 하위 요소 목록 생성 메소드, 숫자포맷, 동작, IO Exception 발생   */
-	// 탐색기 객체의 하위 요소 목록 생성 메소드 호출
+	@SuppressWarnings("static-access")
+	public void fileList(Component component, SocketThread socketThread) throws UnsupportedOperationException, NumberFormatException, IOException {
+		explorer.makeFileList(component, socketThread);// 탐색기 객체의 하위 요소 목록 생성 메소드 호출
+	}
 
 	/*   살아있는 전체 소켓 메세지 전달 메소드   */
 	public void sendMessageAll(String message) {

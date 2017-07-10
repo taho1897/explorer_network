@@ -57,10 +57,9 @@ public class Explorer {
 
 	/*   번호, 복합요소 객체, 소켓스레드를 이용한 메뉴 선택 메소드, 동작, IOException   */
 	public void selectMenu(int num, Component root, SocketThread socketThread) throws UnsupportedOperationException, IOException {
-		Component temp1 = root.getChild(num);// 해당 번호의 복합요소 객체 자식 요소 객체를 저장
-		Component temp2 = root.getChild(num - 1);// 해당 번호에서 1 감소한 자식 요소 객체를 저장
-		if(temp2.getTag().equals("F: ")) {// 해당 자식요소의 태그가 "F: "와 같다면(파일이라면)
-			String route = root.getTag() + "/" + temp2.getValue();// 루트 복합요소객체의 태그(경로)와 자식요소의 값을 더해서 경로 생성
+		Component temp = root.getChild(num - 1);// 해당 번호에서 1 감소한 자식 요소 객체를 저장
+		if(temp.getTag().equals("F: ")) {// 해당 자식요소의 태그가 "F: "와 같다면(파일이라면)
+			String route = root.getTag() + "/" + temp.getValue();// 루트 복합요소객체의 태그(경로)와 자식요소의 값을 더해서 경로 생성
 			File file = new File(route);// 새로운 경로를 이용하여 파일 객체 생성
 			if(file.canRead()) {// 현재 선택된 파일이 읽을 수 있는 파일인지 확인
 				socketThread.sendMessage("선택한 항목은 " + num + 1 + ". " + route);// 소켓스레드를 이용, 선택한 번호와 경로 안내 메세지 전송
@@ -75,7 +74,7 @@ public class Explorer {
 		}
 		else {// 해당 자식요소가 디렉토리라면
 			socketThread.sendMessage(num + 1 + "번을 선택하셨습니다. 해당 디렉토리로 이동합니다");// 소켓스레드를 사용하여 해당 디렉토리 선택 안내메세지 전송 
-			makeFileList(temp2, socketThread);// 선택 디렉토리, 소켓스레드를 이용하여 파일목록 생성
+			makeFileList(temp, socketThread);// 선택 디렉토리, 소켓스레드를 이용하여 파일목록 생성
 			delay();// 딜레이
 		}
 	}

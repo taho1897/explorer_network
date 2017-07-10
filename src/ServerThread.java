@@ -10,6 +10,7 @@ public class ServerThread extends Thread {
 	public static void main(String[] args) {
 		ServerThread serverThread = new ServerThread();// 서버스레드 객체 선언
 		serverThread.start(6001);// 6001포트로 서버 스레드 시작
+		System.out.println("server Start");
 	}
 	
 	/*   포트 번호를 받아 서버스레드 시작 메소드   */
